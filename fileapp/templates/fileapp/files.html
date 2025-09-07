@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Uploaded Files</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            width: 90%;
+            max-width: 900px;
+            overflow-x: auto;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #667eea;
+            color: white;
+        }
+
+        td a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        td a:hover {
+            color: #556cd6;
+        }
+
+        .main-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #667eea;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .main-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Files uploaded by {{ username }}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Upload Time</th>
+                    <th>Download</th>
+                    <th>View</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for f in files %}
+                <tr>
+                    <td>{{ f.filename }}</td>
+                    <td>{{ f.upload_time|date:"Y-m-d H:i:s" }}</td>
+                    <td><a href="{% url 'download_file' f.id %}">⬇️</a></td>
+                    <td><a href="{% url 'view_file' f.id %}">👁</a></td>
+                    <td><a href="{% url 'delete_file' f.id %}" onclick="return confirm('Delete this file?')">🗑</a></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No files uploaded yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div style="text-align: center;">
+            <a href="{% url 'upload_file' %}" class="main-link">⬆ Upload more</a> |
+            <a href="{% url 'logout' %}" class="main-link">🚪 Logout</a>
+        </div>
+    </div>
+</body>
+</html>

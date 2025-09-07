@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>View File - {{ filename }}</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding-top: 40px;
+        }
+
+        .view-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            width: 95%;
+            max-width: 900px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        p {
+            text-align: center;
+            color: #b30000;
+            font-weight: bold;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .links a {
+            text-decoration: none;
+            font-weight: bold;
+            color: #667eea;
+            margin: 0 10px;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="view-container">
+        <h2>📄 {{ filename }}</h2>
+
+        {% if preview_url %}
+            <!-- PDF or Office file preview -->
+            <iframe src="{{ preview_url }}"></iframe>
+        {% elif content %}
+            <!-- Decrypted text preview -->
+            <pre>{{ content }}</pre>
+        {% else %}
+            <p>❌ Unsupported file type for preview.</p>
+        {% endif %}
+
+        <div class="links">
+            <a href="{% url 'user_files' %}">⬅️ Back to Files</a> |
+            <a href="{% url 'upload_file' %}">⬆️ Upload More</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Upload File</title>
+    <style>
+        body.upload-page {
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 40px;
+            min-height: 100vh;
+        }
+
+        .centered-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            width: 95%;
+            max-width: 800px;
+        }
+
+        h2, h3 {
+            text-align: center;
+            color: #333;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            width: 100%;
+        }
+
+        .glossy-form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .glossy-form button,
+        .glossy-form input[type="submit"] {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            background-color: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .glossy-form button:hover,
+        .glossy-form input[type="submit"]:hover {
+            background-color: #556cd6;
+        }
+
+        textarea, iframe {
+            width: 100%;
+            margin-top: 10px;
+            display: none;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        #pptxNotice {
+            display: none;
+            color: #b30000;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            font-weight: bold;
+            color: #667eea;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="upload-page">
+    <div class="centered-container">
+        <h2>Welcome, {{ username }}!</h2>
+        <h3>Upload Encrypted File</h3>
+
+        <form method="POST" action="{% url 'upload_file' %}" enctype="multipart/form-data" class="glossy-form">
+            {% csrf_token %}
+            <input type="file" name="file" id="fileInput" required><br><br>
+            <button type="button" onclick="previewFile()">👁 Preview</button>
+            <input type="submit" value="⬆ Upload">
+        </form>
+
+        <h3>Preview:</h3>
+        <textarea id="previewText" readonly>No file previewed yet.</textarea>
+        <iframe id="previewPDF" height="400px"></iframe>
+        <div id="pptxNotice">⚠ PPTX preview not supported in browser. Please upload and view after decryption.</div>
+
+        <br><br>
+        <div style="text-align: center;">
+            <a href="{% url 'list_files' %}">📂 View Files</a>|
+            <a href="{% url 'logout' %}">🚪 Logout</a>
+        </div>
+    </div>
+
+    <script>
+        function previewFile() {
+            const input = document.getElementById('fileInput');
+            const file = input.files[0];
+            const textPreview = document.getElementById('previewText');
+            const pdfPreview = document.getElementById('previewPDF');
+            const pptxNotice = document.getElementById('pptxNotice');
+
+            if (!file) return alert("Please select a file");
+
+            const ext = file.name.split('.').pop().toLowerCase();
+            const reader = new FileReader();
+
+            textPreview.style.display = 'none';
+            pdfPreview.style.display = 'none';
+            pptxNotice.style.display = 'none';
+
+            if (ext === 'pdf') {
+                reader.onload = e => {
+                    const blob = new Blob([e.target.result], { type: 'application/pdf' });
+                    pdfPreview.src = URL.createObjectURL(blob);
+                    pdfPreview.style.display = 'block';
+                };
+                reader.readAsArrayBuffer(file);
+            } else if (['txt', 'csv', 'md'].includes(ext)) {
+                reader.onload = e => {
+                    textPreview.value = e.target.result;
+                    textPreview.style.display = 'block';
+                };
+                reader.readAsText(file);
+            } else if (ext === 'pptx') {
+                pptxNotice.style.display = 'block';
+            } else {
+                textPreview.value = "❌ Unsupported file type for preview.";
+                textPreview.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
