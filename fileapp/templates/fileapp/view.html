@@ -1,74 +1,89 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>View File - {{ filename }}</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: "Segoe UI", sans-serif;
-            background: linear-gradient(to right, #667eea, #764ba2);
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            padding-top: 40px;
-        }
+<meta charset="UTF-8">
+<title>View File - {{ filename }}</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
 
-        .view-container {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            width: 95%;
-            max-width: 900px;
-        }
+    body {
+        min-height: 100vh;
+        background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 40px 20px;
+        color: #fff;
+    }
 
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
+    .view-container {
+        width: 95%;
+        max-width: 900px;
+        background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(15px);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
 
-        iframe {
-            width: 100%;
-            height: 600px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
+    h2 {
+        text-align: center;
+        font-size: 28px;
+        margin-bottom: 30px;
+        color: #fff;
+        text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    }
 
-        pre {
-            background: #f4f4f4;
-            padding: 15px;
-            border-radius: 8px;
-            overflow-x: auto;
-            white-space: pre-wrap;
-        }
+    iframe {
+        width: 100%;
+        height: 600px;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
 
-        p {
-            text-align: center;
-            color: #b30000;
-            font-weight: bold;
-        }
+    pre {
+        background: rgba(255,255,255,0.1);
+        padding: 20px;
+        border-radius: 12px;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #e0e0e0;
+        box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+    }
 
-        .links {
-            text-align: center;
-            margin-top: 20px;
-        }
+    p {
+        text-align: center;
+        color: #ff6b6b;
+        font-weight: bold;
+        margin-top: 30px;
+    }
 
-        .links a {
-            text-decoration: none;
-            font-weight: bold;
-            color: #667eea;
-            margin: 0 10px;
-        }
+    .links {
+        text-align: center;
+        margin-top: 25px;
+    }
 
-        .links a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    .links a {
+        text-decoration: none;
+        font-weight: bold;
+        color: #43cea2;
+        margin: 0 15px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        background: rgba(255,255,255,0.1);
+        transition: 0.3s;
+    }
+
+    .links a:hover {
+        background: rgba(255,255,255,0.2);
+        color: #36b18c;
+    }
+</style>
 </head>
 <body>
     <div class="view-container">
@@ -85,7 +100,7 @@
         {% endif %}
 
         <div class="links">
-            <a href="{% url 'user_files' %}">⬅️ Back to Files</a> |
+            <a href="{% url 'user_files' %}">⬅️ Back to Files</a>
             <a href="{% url 'upload_file' %}">⬆️ Upload More</a>
         </div>
     </div>

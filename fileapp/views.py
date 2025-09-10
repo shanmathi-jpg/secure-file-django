@@ -55,7 +55,7 @@ def user_register(request):
         request.session['prefill_username'] = username
         request.session['prefill_password'] = password
 
-        return redirect('login')
+        return redirect('home')
 
     return render(request, 'fileapp/register.html')
 

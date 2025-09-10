@@ -1,87 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Login | Secure File System</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: "Segoe UI", sans-serif;
-            background: linear-gradient(to right, #667eea, #764ba2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+<meta charset="UTF-8">
+<title>Secure File System | Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Roboto', sans-serif;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
+        overflow: hidden;
+    }
 
-        .login-container {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
+    /* Animated Background Particles */
+    .particle {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 50%;
+        animation: float 20s linear infinite;
+    }
 
-        .login-container h2 {
-            margin-bottom: 20px;
-            color: #333;
-        }
+    @keyframes float {
+        0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
+        50% { opacity: 0.3; }
+        100% { transform: translateY(-100vh) translateX(200px) rotate(360deg); opacity: 0; }
+    }
 
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-        }
+    /* Glassmorphism Login Card */
+    .login-card {
+        position: relative;
+        z-index: 1;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(15px);
+        border-radius: 20px;
+        padding: 50px 40px;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+        text-align: center;
+        border: 1px solid rgba(255,255,255,0.2);
+    }
 
-        button {
-            background-color: #667eea;
-            color: white;
-            border: none;
-            padding: 12px;
-            width: 100%;
-            font-size: 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+    .login-card h2 {
+        font-size: 28px;
+        color: #fff;
+        margin-bottom: 30px;
+    }
 
-        button:hover {
-            background-color: #556cd6;
-        }
+    /* Encryption Icon */
+    .login-card img {
+        width: 80px;
+        margin-bottom: 20px;
+    }
 
-        .bottom-text {
-            margin-top: 10px;
-            font-size: 14px;
-        }
+    /* Inputs */
+    .login-card input[type="text"],
+    .login-card input[type="password"] {
+        width: 100%;
+        padding: 15px 20px;
+        margin-bottom: 20px;
+        border: none;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.15);
+        color: #fff;
+        font-size: 16px;
+        outline: none;
+        transition: 0.3s;
+    }
 
-        .bottom-text a {
-            color: #667eea;
-            text-decoration: none;
-        }
+    .login-card input:focus {
+        background: rgba(255,255,255,0.25);
+        box-shadow: 0 0 10px #667eea;
+    }
 
-        .error {
-            color: red;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-    </style>
+    /* Button */
+    .login-card button {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: #fff;
+        transition: 0.3s;
+    }
+
+    .login-card button:hover {
+        background: linear-gradient(135deg, #556cd6, #5e35b1);
+        box-shadow: 0 0 15px #667eea;
+    }
+
+    .bottom-text {
+        margin-top: 20px;
+        color: rgba(255,255,255,0.7);
+        font-size: 14px;
+    }
+
+    .bottom-text a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .error {
+        color: #ff4c4c;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+</style>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="login-container">
-        <h2>Welcome Back 👋</h2>
 
-        <!-- Login Form -->
+    <!-- Floating particles -->
+    <div class="particle" style="left:5%; animation-duration: 18s;"></div>
+    <div class="particle" style="left:25%; animation-duration: 22s;"></div>
+    <div class="particle" style="left:50%; animation-duration: 20s;"></div>
+    <div class="particle" style="left:70%; animation-duration: 25s;"></div>
+    <div class="particle" style="left:90%; animation-duration: 30s;"></div>
+
+    <div class="login-card">
+        <!-- Encryption Icon -->
+        <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" alt="Encryption Icon">
+        <h2>Secure File System</h2>
+
         <form method="post">
             {% csrf_token %}
 
-            <!-- Error Message -->
             {% if error %}
                 <p class="error">{{ error }}</p>
             {% endif %}
@@ -93,5 +147,6 @@
 
         <p class="bottom-text">Don't have an account? <a href="{% url 'register' %}">Register</a></p>
     </div>
+
 </body>
 </html>
