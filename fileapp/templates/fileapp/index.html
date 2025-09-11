@@ -53,6 +53,17 @@
         font-size: 28px;
         margin-bottom: 20px;
     }
+    footer {
+      background: #000;
+      color: #fff;
+      text-align: center;
+      padding: 12px 0;
+      font-size: 14px;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+    }
 
     .login-container p {
         margin-bottom: 30px;
@@ -79,7 +90,7 @@
     }
 </style>
 </head>
-<body>
+
 
     <!-- Floating particles -->
     <div class="particle" style="left:5%; animation-duration: 18s;"></div>
@@ -102,6 +113,15 @@
             <button type="submit">Admin Login</button>
         </form>
     </div>
+</head>
+<body>
+  <div class="content">
+    {% block content %}{% endblock %}
+  </div>
 
+  <footer>
+    &copy; 2025 All Rights Reserved by 
+    <strong>Shanmathi</strong> and <strong>Asha Benazir</strong>
+  </footer>
 </body>
 </html>
